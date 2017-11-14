@@ -1,13 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
-import drag_and_drop
 
-import authorization
-import unittest, time
+import get_alert.alert as alert
+import authorization.authorization as authorization
+import unittest
 
 base_url = "http://way2automation.com/way2auto_jquery"
-frame_locator = "//iframe[@src='droppable/default.html']"
-
+keyword = "friend"
 
 class Test (unittest.TestCase):
     def setUp(self):
@@ -18,10 +17,9 @@ class Test (unittest.TestCase):
         self.driver.refresh()
         self.driver.get(base_url + "/alert.php")
 
-    def test_action_submenu(self):
-        move = drag_and_drop.move(self.driver, self.wait)
-        time.sleep(3)
-        assert ("friend" in move)
+    def test_get_alert(self):
+        test_result = alert.test_step(self.driver, self.wait)
+        assert (keyword in test_result)
 
     def tearDown(self):
         self.driver.quit()
